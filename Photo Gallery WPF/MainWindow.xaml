@@ -38,7 +38,7 @@
                 </MenuItem>
             </Menu>
 
-            <ListBox ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox Name="lbx" AllowDrop="True" DragOver="lbx1_DragOver" Drop="lbx1_Drop" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <UniformGrid Rows="3" Columns="3"/>
@@ -51,8 +51,7 @@
                 <Image Source="/icons8-image-100.png" Width="125"/>
                 <Image Source="/icons8-image-100.png" Width="100"/>
                 <Image Source="/icons8-image-100.png" Width="50"/>
-                <Image Source="/icons8-image-100.png" Width="50"/>
-                <Image Source="/icons8-image-100.png" Width="50"/>
+
             </ListBox>
         </DockPanel>
     </Grid>
