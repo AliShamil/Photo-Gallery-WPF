@@ -1,0 +1,32 @@
+﻿<Application x:Class="Photo_Gallery_WPF.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Photo_Gallery_WPF"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <Style x:Key="eventTrigger" TargetType="Border">
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="MouseEnter">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Duration="0:0:0.300" Storyboard.TargetProperty="Width" To="400" />
+                                <DoubleAnimation Duration="0:0:0.300" Storyboard.TargetProperty="Height" To="200" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="MouseLeave">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <DoubleAnimation Duration="0:0:0.800" Storyboard.TargetProperty="Width" To="300" />
+                                <DoubleAnimation Duration="0:0:0.800" Storyboard.TargetProperty="Height" To="100" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+    </Application.Resources>
+</Application>
