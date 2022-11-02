@@ -13,18 +13,20 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Photo_Gallery_WPF
+namespace Photo_Gallery_WPF.Pages
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// GalleryMain.xaml etkileşim mantığı
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class GalleryMain : Page
     {
-        public MainWindow()
+        public GalleryMain()
         {
             InitializeComponent();
         }
-
+        public uint Rows { get; set; } = 3;
+        public uint Columns { get; set; } = 3;
+        
 
         private void lbx1_DragOver(object sender, DragEventArgs e)
         {
@@ -67,9 +69,35 @@ namespace Photo_Gallery_WPF
                     Height=100,
                     Stretch = Stretch.Uniform
                 });
-
+                
                 MessageBox.Show(filename);
             }
+
+        }
+
+        private void lbx_DragEnter(object sender, DragEventArgs e)
+        {
+            if (lbx.Items.Count > (Rows * 3))
+            {
+                ++Rows;
+            }
+            else
+                return;
+        }
+
+        private void lbx_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+                var listBox = sender as ListBox;
+                var selectedImage = listBox?.SelectedItem as Image;
+
+                if (selectedImage is null)
+                    return;
+
+           
+            //ProductInfo window = new(selectedProductItem);
+            // window.ShowDialog();
+
 
         }
     }

@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="icons8-image-100.png" />
+    <Resource Include="StaticFiles\Images\icons8-image-100.png" />
   </ItemGroup>
 
 </Project>

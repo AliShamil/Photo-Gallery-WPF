@@ -1,15 +1,14 @@
-﻿<Window x:Class="Photo_Gallery_WPF.MainWindow"
+﻿<Window x:Class="Photo_Gallery_WPF.Views.MainView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Photo_Gallery_WPF"
+        xmlns:local="clr-namespace:Photo_Gallery_WPF.Views"
         mc:Ignorable="d"
-        Title="Photo Gallery" Height="450" Width="800" Icon="/icons8-image-100.png">
-
+        Title="MainView" Height="450" Width="800">
     <Grid>
         <DockPanel>
-            
+
 
             <Menu DockPanel.Dock="Top" Background="Transparent" Foreground="Black">
 
@@ -37,8 +36,8 @@
 
                 </MenuItem>
             </Menu>
-
-            <ListBox Name="lbx" AllowDrop="True" DragOver="lbx1_DragOver" Drop="lbx1_Drop" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+            <Frame Source="/Pages/GalleryMain.xaml" NavigationUIVisibility="Hidden"/>
+            <!--<ListBox Name="lbx" AllowDrop="True" DragOver="lbx1_DragOver" Drop="lbx1_Drop" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <UniformGrid Rows="3" Columns="3"/>
@@ -52,7 +51,7 @@
                 <Image Source="/icons8-image-100.png" Width="100"/>
                 <Image Source="/icons8-image-100.png" Width="50"/>
 
-            </ListBox>
+            </ListBox>-->
         </DockPanel>
     </Grid>
 </Window>
