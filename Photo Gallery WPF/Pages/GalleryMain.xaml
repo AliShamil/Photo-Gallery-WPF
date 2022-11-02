@@ -3,20 +3,63 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Photo_Gallery_WPF.Pages"
+      xmlns:local="clr-namespace:Photo_Gallery_WPF.Pages" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="GalleryMain">
+      Title="GalleryMain" KeepAlive="True">
+
+
 
     <Grid>
-        <ListBox Name="lbx" AllowDrop="True" DragOver="lbx1_DragOver" Drop="lbx1_Drop" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" DragEnter="lbx_DragEnter" MouseDoubleClick="lbx_MouseDoubleClick">
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                    <UniformGrid Rows="{Binding Rows}" Columns="4"/>
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <Menu DockPanel.Dock="Top" Background="Transparent" Foreground="Black" >
+
+            <MenuItem Header="_File"  >
+                <MenuItem Header="_New" Foreground="Black" Click="MenuItemFileNew" Icon="{materialDesign:PackIcon Kind=Plus}" />
+                <MenuItem Header="_Open" Foreground="Black"  Click="OpenFile_Click" Icon="{materialDesign:PackIcon Kind=OpenInNew}" InputGestureText="Ctrl+O">
+                    <MenuItem.InputBindings>
+                        <KeyBinding Key="O" Modifiers="Ctrl"/>
+                    </MenuItem.InputBindings>
+                </MenuItem>
+                <MenuItem Header="_Save"  Foreground="Black" InputGestureText="Ctrl+S"  Icon="{materialDesign:PackIcon Kind=ContentSave}" />
+                <Separator />
+                <MenuItem Header="_Exit" Foreground="Black"  InputGestureText="Ctrl+E" Icon="{materialDesign:PackIcon Kind=ExitToApp}" />
+            </MenuItem>
+
+          
+
+            <MenuItem Header="_View"  >
+                <MenuItem Header="_Large" Foreground="Black"  Click="MenuItemViewLarge_Click"/>
+                <MenuItem Header="_Medium" Foreground="Black" Click="MenuItemViewMedium_Click"/>
+                <MenuItem Header="_Small"  Foreground="Black" Click="MenuItemViewSmall_Click"/>
+            </MenuItem>
+
+            <MenuItem Header="_About"/>
+
+        </Menu>
+
+        <ListBox Grid.Row="1" Name="lbx" AllowDrop="True"
+                 DragOver="lbx1_DragOver" Drop="lbx_Drop" 
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden" 
+                 MouseDoubleClick="lbx_MouseDoubleClick">
+            <ListBox.ContextMenu>
+                <ContextMenu Background="{StaticResource MaterialDesignToolTipBackground}" Foreground="White">
+                    <MenuItem Header="Delete"  Click="MenuItem_Click" Icon="{materialDesign:PackIcon Delete}"/>
+                </ContextMenu>
+            </ListBox.ContextMenu>
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Rows="{Binding RowsCount}" Columns="{Binding ColumnsCount}"/>
+                </ItemsPanelTemplate>
+                
+            </ListBox.ItemsPanel>
 
 
-            </ListBox>
+        </ListBox>
     </Grid>
+
 </Page>

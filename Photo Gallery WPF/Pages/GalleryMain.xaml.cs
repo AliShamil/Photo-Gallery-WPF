@@ -1,6 +1,13 @@
-﻿using System;
+﻿using MaterialDesignThemes.Wpf;
+using Microsoft.Win32;
+using Photo_Gallery_WPF.Views;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,20 +22,53 @@ using System.Windows.Shapes;
 
 namespace Photo_Gallery_WPF.Pages
 {
-    /// <summary>
-    /// GalleryMain.xaml etkileşim mantığı
-    /// </summary>
-    public partial class GalleryMain : Page
+    public partial class GalleryMain : Page, INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+            => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+
+
+
+        public List<ImageSource> ImageSources { get; set; }
+        private uint _rows = 3;
+
+        public uint RowsCount
+        {
+            get { return _rows; }
+            set
+            {
+                _rows = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private uint _columns = 3;
+
+        public uint ColumnsCount
+        {
+            get { return _columns; }
+            set
+            {
+                _columns = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+
         public GalleryMain()
         {
             InitializeComponent();
-        }
-        public uint Rows { get; set; } = 3;
-        public uint Columns { get; set; } = 3;
-        
+            DataContext = this;
+            ImageSources = new();
 
-        private void lbx1_DragOver(object sender, DragEventArgs e)
+        }
+
+
+
+        private async void lbx1_DragOver(object sender, DragEventArgs e)
         {
             bool dropEnabled = true;
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
@@ -38,7 +78,7 @@ namespace Photo_Gallery_WPF.Pages
 
                 foreach (string filename in filenames)
                 {
-                    if (System.IO.Path.GetExtension(filename).ToUpperInvariant() != ".JPG" && System.IO.Path.GetExtension(filename).ToUpperInvariant() != ".JPEG"&& System.IO.Path.GetExtension(filename).ToUpperInvariant() != ".PNG")
+                    if (System.IO.Path.GetExtension(filename).ToUpperInvariant() != ".JPG" && System.IO.Path.GetExtension(filename).ToUpperInvariant() != ".JPEG"&& System.IO.Path.GetExtension(filename).ToUpperInvariant() != ".PNG"&& System.IO.Path.GetExtension(filename).ToUpperInvariant() != ".BMP")
                     {
                         dropEnabled = false;
                         break;
@@ -58,47 +98,86 @@ namespace Photo_Gallery_WPF.Pages
         }
 
 
-        private void lbx1_Drop(object sender, DragEventArgs e)
+        private async void lbx_Drop(object sender, DragEventArgs e)
         {
             foreach (var filename in e.Data.GetData(DataFormats.FileDrop) as string[])
             {
-                lbx.Items.Add(new Image()
+                var image = new Image()
                 {
-                    Source =new BitmapImage(new Uri(filename)),
-                    Width=100,
-                    Height=100,
+                    Source = new BitmapImage(new Uri(filename)),
+                    Width = 150,
+                    Height = 150,
+                    MinHeight = 70,
+                    MinWidth = 70,
                     Stretch = Stretch.Uniform
-                });
-                
-                MessageBox.Show(filename);
+                };
+
+                lbx.Items.Add(image);
+                ImageSources.Add(image.Source);
             }
 
         }
 
-        private void lbx_DragEnter(object sender, DragEventArgs e)
-        {
-            if (lbx.Items.Count > (Rows * 3))
-            {
-                ++Rows;
-            }
-            else
-                return;
-        }
+
 
         private void lbx_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            if (lbx.SelectedItem is Image image)
+            {
+                PicturePage photoPage = new(image.Source, ImageSources);
 
-                var listBox = sender as ListBox;
-                var selectedImage = listBox?.SelectedItem as Image;
+                NavigationService.Navigate(photoPage);
 
-                if (selectedImage is null)
-                    return;
-
-           
-            //ProductInfo window = new(selectedProductItem);
-            // window.ShowDialog();
+            }
+        }
 
 
+
+        private void MenuItemViewLarge_Click(object sender, RoutedEventArgs e)
+        {
+            ColumnsCount = 1;
+            RowsCount = ((uint)lbx.Items.Count);
+        }
+
+        private void MenuItemViewMedium_Click(object sender, RoutedEventArgs e) => ColumnsCount = 3;
+        private void MenuItemViewSmall_Click(object sender, RoutedEventArgs e) => ColumnsCount = 8;
+        private void MenuItemFileNew(object sender, RoutedEventArgs e)
+        {
+            MainView mainView = new MainView();
+            mainView.Show();
+        }
+
+
+
+        private  void OpenFile_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "PNG|*.png|JPG|*.jpg; *.jpeg;|GIF|*.gif;|BMP|*.bmp;";
+            openFileDialog.Multiselect = true;  
+
+            if (openFileDialog.ShowDialog() is true)
+            {
+                var image = new Image()
+                {
+                    Source = new BitmapImage(new Uri(openFileDialog.FileName)),
+                    Width = 150,
+                    Height = 150,
+                    MinHeight = 70,
+                    MinWidth = 70,
+                    Stretch = Stretch.Uniform
+                };
+
+                lbx.Items.Add(image);
+                
+                ImageSources.Add(image.Source);
+            }
+
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (lbx.SelectedItem != null)
+                lbx.Items.Remove(lbx.SelectedItem);
         }
     }
 }

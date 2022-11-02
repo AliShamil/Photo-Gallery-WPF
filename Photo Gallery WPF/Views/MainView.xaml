@@ -5,53 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Photo_Gallery_WPF.Views"
         mc:Ignorable="d"
-        Title="MainView" Height="450" Width="800">
+        Title="Photos" Height="450" Width="800" Icon="/StaticFiles/Images/logo.png">
     <Grid>
-        <DockPanel>
 
-
-            <Menu DockPanel.Dock="Top" Background="Transparent" Foreground="Black">
-
-                <MenuItem Header="_File"  >
-                    <MenuItem Header="_New" Foreground="Black"  />
-                    <MenuItem Header="_Open" Foreground="Black"  />
-                    <MenuItem Header="_Save"  Foreground="Black" />
-                    <Separator />
-                    <MenuItem Header="_Exit" Foreground="Black"/>
-                </MenuItem>
-
-                <MenuItem Header="_Edit"  >
-                    <MenuItem Header="_Add File" Foreground="Black"  />
-                    <MenuItem Header="_Add Folder" Foreground="Black"  />
-
-                </MenuItem>
-
-                <MenuItem Header="_View"  >
-                    <MenuItem Header="_Tiles" Foreground="Black"  />
-                    <MenuItem Header="_Small Icons" Foreground="Black"  />
-                    <MenuItem Header="_Details"  Foreground="Black" />
-                </MenuItem>
-                <MenuItem Header="_About"  >
-                    <MenuItem Header="_About" Foreground="Black"  />
-
-                </MenuItem>
-            </Menu>
-            <Frame Source="/Pages/GalleryMain.xaml" NavigationUIVisibility="Hidden"/>
-            <!--<ListBox Name="lbx" AllowDrop="True" DragOver="lbx1_DragOver" Drop="lbx1_Drop" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden">
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <UniformGrid Rows="3" Columns="3"/>
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-                <Image Source="/icons8-image-100.png" Width="100"/>
-                <Image Source="/icons8-image-100.png" Width="50"/>
-                <Image Source="/icons8-image-100.png" Width="200"/>
-                <Image Source="/icons8-image-100.png" Width="75"/>
-                <Image Source="/icons8-image-100.png" Width="125"/>
-                <Image Source="/icons8-image-100.png" Width="100"/>
-                <Image Source="/icons8-image-100.png" Width="50"/>
-
-            </ListBox>-->
-        </DockPanel>
+        <Frame Source="/Pages/GalleryMain.xaml" NavigationUIVisibility="Hidden"/>
     </Grid>
 </Window>

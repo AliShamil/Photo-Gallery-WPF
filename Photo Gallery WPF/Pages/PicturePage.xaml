@@ -1,0 +1,54 @@
+﻿<Page x:Class="Photo_Gallery_WPF.Pages.PicturePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Photo_Gallery_WPF.Pages" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="PicturePage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
+            <RowDefinition/>
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+        <Button ToolTip="Go Back" Width="50" Command="NavigationCommands.BrowseBack"  Padding="5" BorderThickness="0" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Click="Button_Click">
+            <materialDesign:PackIcon
+    Kind="ArrowLeftBold" />
+        </Button>
+
+
+        <Image Grid.Row="1" Source="{Binding CurrentImageSource}"></Image>
+
+        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center">
+        <Button 
+            Click="BtnBackward_Click"
+  Style="{StaticResource MaterialDesignIconButton}"
+  ToolTip="Previous"
+  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
+            <materialDesign:PackIcon
+    Kind="SkipBackwardOutline" />
+        </Button>
+            
+            <ToggleButton
+                Name="BtnPlay"
+                Checked="BtnPlayChecked"
+                Unchecked="BtnPlayUnchecked"
+  Content="{materialDesign:PackIcon Kind=PlayOutline, Size=21}"
+  Style="{StaticResource MaterialDesignFlatPrimaryToggleButton}"
+  ToolTip="Slide Show"
+  IsChecked="False" />
+            
+            <Button 
+                Click="BtnForward_Click"
+  Style="{StaticResource MaterialDesignIconButton}"
+  ToolTip="Next"
+  IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
+                <materialDesign:PackIcon
+    Kind="SkipForwardOutline" />
+            </Button>
+        </StackPanel>
+    </Grid>
+</Page>
